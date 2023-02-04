@@ -64,7 +64,7 @@ export class Queue {
     }
 
     startChat() {
-        if (this.queue.length > 1) {
+        if (this.queue.length == 2) {
             this.joinTwoSockets();
         }
     }
