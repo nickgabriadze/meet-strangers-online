@@ -17,14 +17,15 @@ export const MessagingPage = ({ socket }: any) => {
         text: 'MSG',
         timeSent: 'TIME'
     }]);
+
+    const actives:number = useAppSelector(state => state.uReducer.activeUsers);
     const [writtenMessage, setWrittenMessage] = useState("");
     const msgBoxRef = useRef<HTMLDivElement>(null);
     const [newOne, setNewOne] = useState(false);
     const [isChattingWith, setIsChattingWith] = useState<String>("");
 
     const [inChat, setInChat] = useState(false);
-    const [activeOnWebsite, setActiveOnWebsite] = useState<Number>(0);
-
+    
     const sendMessage = async () => {        
         const msg = {
             from: username,
@@ -49,21 +50,16 @@ export const MessagingPage = ({ socket }: any) => {
         setInChat(true);
     })
 
-    socket.on("share-live-counter", (count: Number) => {
-        setActiveOnWebsite(count);
-      })
+
 
 
     socket.on("receive-username", (receivedUsername: String) => {
       setIsChattingWith(receivedUsername);
-      console.log(receivedUsername);
+    
     });
 
 
-    useEffect(() => {
-
-
-    }, [socket])
+    
 
 
     useEffect(() => {
@@ -162,7 +158,7 @@ export const MessagingPage = ({ socket }: any) => {
 
                                 >Send</div>
                             </div>
-                            <div style={{textAlign: 'center', marginTop:'5px', color: "#4B0082"}}>Active Users: <>{activeOnWebsite}</></div>
+                            <div style={{textAlign: 'center', marginTop:'5px', color: "#4B0082"}}>Active Users: <>{actives}</></div>
 
                         </div>
                     </div>

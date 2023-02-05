@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import { useState } from 'react';
 import styles from '../styles/Home.module.css';
-import { delay, motion, spring } from 'framer-motion'
+import {motion, spring } from 'framer-motion'
 import { useAppDispatch, useAppSelector } from '@/redux-store/hooks';
-import { setInQueue, setUsername, setRoom } from '@/redux-store/userSlice';
+import { setActiveUsers, setInQueue, setUsername } from '../redux-store/userSlice';
 import MessagingPage from './messagingPage';
 import { io } from "socket.io-client";
 
@@ -13,7 +13,15 @@ const socket = io("http://localhost:3001");
 
 export default function Home() {
   const inQueue = useAppSelector(state => state.uReducer.inQueue);
-
+  const dispatch = useAppDispatch();
+  
+  socket.on("share-live-counter", (count: number) => {
+    
+    dispatch(setActiveUsers({
+      active: count
+    }));
+    
+    });
 
   return (
     <>
@@ -59,7 +67,7 @@ const HeadPoint = () => {
   )
 }
 
-function SmallForm() {
+export function SmallForm() {
 
 
   const dispatch = useAppDispatch();
@@ -67,13 +75,15 @@ function SmallForm() {
   const [emptyUsername, setEmptyUsername] = useState(false);
   const [activeUsers, setActiveUsers] = useState<Number>(0);
 
-  socket.on("share-live-counter", (count: Number) => {
-    setActiveUsers(count);
-  })
+  socket.on("share-live-counter", (count: number) => {
+  setActiveUsers(count);
+
+  });
 
   const checkUsername = (un: string) => {
     return !(un.length > 20)
   }
+
   return (
     <>
       <div className={styles['inputs']}>
@@ -114,6 +124,8 @@ function SmallForm() {
                 dispatch(setInQueue({
                   inQueue: true
                 }));
+
+                
                 socket.emit("join-queue", username);
               }
             }}

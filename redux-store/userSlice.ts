@@ -3,13 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 interface userSlice {
     username: string,
     inQueue: boolean,
-    room: string
+    activeUsers: number
 }
+
+
 
 const initialState: userSlice = {
     username: "",
     inQueue: false,
-    room: ""
+    activeUsers: 0
 }
 
 export const uSlice = createSlice({
@@ -31,15 +33,15 @@ export const uSlice = createSlice({
             }
         },
 
-        setRoom: (state, action) => {
+        setActiveUsers: (state, action) => {
             return {
                 ...state,
-                room: action.payload.room
+                activeUsers: action.payload.active
             }
         }
-    }
+    },
 })
 
-export const {setUsername, setInQueue, setRoom} = uSlice.actions;
+export const {setUsername, setInQueue, setActiveUsers} = uSlice.actions;
 
 export default uSlice.reducer;
