@@ -31,15 +31,15 @@ export class Queue {
         const randomRoom = v4();
         const twoUsers = [this.pop(), this.pop()];
 
-        twoUsers[0].socket.join(randomRoom);
-        twoUsers[1].socket.join(randomRoom);
+        twoUsers[0]?.socket.join(randomRoom);
+        twoUsers[1]?.socket.join(randomRoom);
 
         const actives = {
             room: randomRoom,
-            socket1: twoUsers[0].socket,
-            socket2: twoUsers[1].socket,
-            username1: twoUsers[0].username,
-            username2: twoUsers[1].username
+            socket1: twoUsers[0]?.socket,
+            socket2: twoUsers[1]?.socket,
+            username1: twoUsers[0]?.username,
+            username2: twoUsers[1]?.username
         }
 
         this.active.push(actives);
@@ -127,7 +127,7 @@ export class Queue {
     shareLiveUsersCounter(){
         
         this.activeUsers.forEach(each => {
-            each.emit("share-live-counter", this.activeUsers.length);
+            each.emit("share-live-counter", this.activeUsers.length-1);
         })
 
     }
