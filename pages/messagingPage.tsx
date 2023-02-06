@@ -122,7 +122,7 @@ export const MessagingPage = ({ socket }: any) => {
 
                             <div className={messagingStyles['action']}>
                                 <div className={messagingStyles['new-send']}
-                                    style={newOne ? {  textAlign: 'center', color: '#2b0091'} : {}}
+                                    style={newOne ? {  textAlign: 'center', color: 'white'} : {}}
                                     
                                     onClick={() => {
 

@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
         q.shareLiveUsersCounter();
 
         clearInterval(interval);
-    }, 3000);
+    }, 2000);
 
    
     socket.on("join-queue", (username) => {
