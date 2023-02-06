@@ -87,11 +87,25 @@ export function SmallForm() {
   return (
     <>
       <div className={styles['inputs']}>
-        <motion.input
-          animate={{ x: [-200, 200, 0] }}
-          transition={{ type: spring, dampling: 1000, velocity: 4, duration: 2 }}
+        <input
           type='text' placeholder={'Username'} className={styles['username']}
           value={username}
+          onKeyDown={(e) =>
+            {if(e.key === 'Enter') {
+             
+            if(username.trim() === ""){
+              setEmptyUsername(true);
+
+            }else{
+              dispatch(setUsername({
+                u: username
+              }));
+
+              dispatch(setInQueue({
+                inQueue: true
+              }));
+          }} }
+        }
           onChange={(e) => {
             if (checkUsername(e.target.value)) {
               usernameSetter(e.target.value)
@@ -100,7 +114,7 @@ export function SmallForm() {
             if(username.length > -1){
               setEmptyUsername(false)
             }
-          }}></motion.input>
+          }}></input>
 
     
         
@@ -108,12 +122,12 @@ export function SmallForm() {
         <div>
           <motion.div className={styles['enter-chat']}
             animate={{ y: [300, 0] }}
-
+            
             onClick={() => {
 
               
               
-              if(username.length === 0){
+              if(username.trim() === ""){
                 setEmptyUsername(true);
 
               }else{
