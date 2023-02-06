@@ -25,11 +25,11 @@ io.on("connection", (socket) => {
 
     q.joinedTheWebsite(socket);
 
-    const interval = setInterval( () => {
+    setInterval( () => {
         q.shareLiveUsersCounter();
 
-        clearInterval(interval);
-    }, 2000);
+        
+    }, 3000);
 
    
     socket.on("join-queue", (username) => {
