@@ -149,7 +149,7 @@ export const MessagingPage = ({ socket }: any) => {
 
                                 <div className={messagingStyles['new-send']}
                                     onClick={() => {
-                                        if (writtenMessage.length != 0) {
+                                        if (writtenMessage.trim() !== "") {
                                             setMessages([...messages, {from: username, text: writtenMessage, timeSent: `${returnCurrentTime()}`}]);
                                             setWrittenMessage("");
                                             sendMessage();
