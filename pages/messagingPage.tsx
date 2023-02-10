@@ -1,4 +1,4 @@
-import messagingStyles from "../styles/messaging.module.css";
+import messagingStyles from "../styles/Messaging.module.css";
 import { returnCurrentTime } from "./api/returnTime";
 import { useEffect, useRef, useState } from 'react';
 import { v4 } from "uuid";

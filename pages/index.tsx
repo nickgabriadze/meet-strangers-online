@@ -104,6 +104,8 @@ export function SmallForm() {
               dispatch(setInQueue({
                 inQueue: true
               }));
+
+              socket.emit("join-queue", username);
           }} }
         }
           onChange={(e) => {
