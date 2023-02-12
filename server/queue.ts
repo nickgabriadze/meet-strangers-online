@@ -34,6 +34,8 @@ export class Queue {
         twoUsers[0]?.socket.join(randomRoom);
         twoUsers[1]?.socket.join(randomRoom);
 
+       
+
         const actives = {
             room: randomRoom,
             socket1: twoUsers[0]?.socket,
@@ -42,9 +44,11 @@ export class Queue {
             username2: twoUsers[1]?.username
         }
 
+        
         this.active.push(actives);
 
 
+        console.log(this.active);
         
         setTimeout(() => {
             actives.socket1.to(randomRoom).emit("receive-username", actives.username1);
@@ -56,6 +60,7 @@ export class Queue {
             actives.socket2.to(randomRoom).emit("open-chat");
         }, 1000)
 
+        
     }
 
 
@@ -79,7 +84,11 @@ export class Queue {
         this.active.forEach(eachChatRoom => {
             if (eachChatRoom.socket1.id === data.fromSocketId) {
                 eachChatRoom.socket1.to(eachChatRoom.room).emit("receive-message", {
-                    from: data.from,
+                    from: data.from + " ", // this is done because the 
+                    // css just ignored the fact that the "from" is actually the other person and if for example
+                    // the sender's username is Mike and the receiver is also Mike, it's comparing Mike === Mike and 
+                    // the final message is still on the right side but the received just doesn't show up, so I'm adding a " " to make
+                    // sure that the "Mike " !== "Mike"
                     text: data.text,
                     timeSent: data.timeSent
                 })
@@ -88,7 +97,7 @@ export class Queue {
             if (eachChatRoom.socket2.id === data.fromSocketId) {
 
                 eachChatRoom.socket2.to(eachChatRoom.room).emit("receive-message", {
-                    from: data.from,
+                    from: data.from + " ",
                     text: data.text,
                     timeSent: data.timeSent
                 })
@@ -111,7 +120,7 @@ export class Queue {
             }
 
 
-        })
+        });
 
         this.active = this.active.filter(eachChat => eachChat.room !== roomToDelete);
     }
