@@ -23,7 +23,6 @@ export const MessagingPage = ({ socket }: any) => {
     const msgBoxRef = useRef<HTMLDivElement>(null);
     const [newOne, setNewOne] = useState(false);
     const [isChattingWith, setIsChattingWith] = useState<String>("");
-    const [fromLastMessage, setFromLastMessage] = useState<{from: string, time: string}[]>([{from: "", time: ""}]);
     const [inChat, setInChat] = useState(false);
     
     const sendMessage = async () => {        
@@ -39,8 +38,6 @@ export const MessagingPage = ({ socket }: any) => {
 
     socket.on("receive-message", (data: Message) => {
         setMessages([...messages, data])
-       setFromLastMessage([...fromLastMessage, {from: data.from, time:data.timeSent}]);
-        console.log(fromLastMessage)
     })  
 
     socket.on("left-the-chat", () => {
