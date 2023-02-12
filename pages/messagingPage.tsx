@@ -23,7 +23,7 @@ export const MessagingPage = ({ socket }: any) => {
     const msgBoxRef = useRef<HTMLDivElement>(null);
     const [newOne, setNewOne] = useState(false);
     const [isChattingWith, setIsChattingWith] = useState<String>("");
-
+    const [fromLastMessage, setFromLastMessage] = useState<{from: string, time: string}[]>([{from: "", time: ""}]);
     const [inChat, setInChat] = useState(false);
     
     const sendMessage = async () => {        
@@ -39,7 +39,8 @@ export const MessagingPage = ({ socket }: any) => {
 
     socket.on("receive-message", (data: Message) => {
         setMessages([...messages, data])
-     
+       setFromLastMessage([...fromLastMessage, {from: data.from, time:data.timeSent}]);
+        console.log(fromLastMessage)
     })  
 
     socket.on("left-the-chat", () => {
@@ -84,13 +85,12 @@ export const MessagingPage = ({ socket }: any) => {
                     
                     <div>
                         
-                        <h4 style={{ color: 'indigo' }}>
-                            {username}
+                        
+                        <h4>You are chatting with: </h4>
+                          <h4 style={{ color: 'indigo' }}>
+                            {isChattingWith}
                         </h4>
-                        <h4>
-                            is chatting with: {isChattingWith}
-                        </h4>
-                    </div>
+                    </div> 
                     <div className={messagingStyles["messagingBox"]}>
 
                         <div>
@@ -103,9 +103,9 @@ export const MessagingPage = ({ socket }: any) => {
                                                 
                                             </div>
                                             { 
-                                            (index === messages.length - 2) ?
+                                             (index === messages.length - 2) ?
                                             <div className={messagingStyles['meta']}>
-                                            <p>{eachMessage.from} at</p>
+                                            <p>{eachMessage.from === username ? "You" : eachMessage.from} at</p>
                                             <p>{eachMessage.timeSent}</p>
                                             
                                             </div>

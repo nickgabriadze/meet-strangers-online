@@ -46,9 +46,6 @@ export class Queue {
 
         
         this.active.push(actives);
-
-
-        console.log(this.active);
         
         setTimeout(() => {
             actives.socket1.to(randomRoom).emit("receive-username", actives.username1);
